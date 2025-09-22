@@ -1,0 +1,64 @@
+<% /* Disqus 评论系统 */ %>
+<% if (theme.disqus_shortname){ %>
+<script>
+  var disqus_shortname = '<%= theme.disqus_shortname %>';
+  <% if (page.permalink){ %>
+  var disqus_url = '<%= page.permalink %>'; // 使用文章的永久链接作为 Disqus 评论的 URL
+  <% } %>
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.async = true;
+    // 根据 page.comments 决定加载 embed.js (显示评论框) 还是 count.js (显示评论数量)
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/<% if (page.comments) { %>embed.js<% } else { %>count.js<% } %>';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<% } %>
+
+<% /* jQuery 库加载 */ %>
+<% /* 建议更新到最新稳定版，或根据需要保留当前版本 */ %>
+<%- js('js/jquery-3.7.1.min.js') %> <% /* Fancybox 图片灯箱效果 */ %>
+<% if (theme.fancybox){ %>
+  <%- js('fancybox/jquery.fancybox.min.js') %>
+<% } %>
+
+<% /* 主题自定义脚本 */ %>
+<%- js('js/script') %>
+
+<% /* 谷歌分析或类似统计工具 */ %>
+<%- partial('gauges-analytics') %>
+<%- js('js/search') %>
+<% /* Valine 评论系统 */ %>
+<% /* 确保在主题的 _config.yml 中配置了 valine.enable, valine.appId, valine.appKey */ %>
+<% if(theme.valine && theme.valine.enable && theme.valine.appId && theme.valine.appKey){ %>
+  <% /* 建议使用最新稳定版的 CDN，例如 1.5.1 或 1.4.18 */ %>
+  <%- js('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js') %>
+<script>
+  var GUEST_INFO_OPTIONS = ['nick','mail','link']; // Valine 官方支持的 guest_info 选项
+  var guest_info_val = '<%= theme.valine.guest_info || "nick,mail,link" %>'; // 默认值
+  var filtered_guest_info = guest_info_val.split(',').filter(function(item){
+    return GUEST_INFO_OPTIONS.includes(item.trim()); // 使用 trim() 确保去除空格
+  }).map(function(item){ return item.trim(); }); // 确保返回的数组元素没有空格
+
+  var notify_val = String('<%= theme.valine.notify %>').toLowerCase() === 'true'; // 转换为布尔值
+  var verify_val = String('<%= theme.valine.verify %>').toLowerCase() === 'true'; // 转换为布尔值
+
+  new Valine({
+    el: '.vcomment', // 评论框的 DOM 元素
+    notify: notify_val, // 评论回复邮件通知
+    verify: verify_val, // 评论验证码
+    appId: "<%= theme.valine.appId %>",
+    appKey: "<%= theme.valine.appKey %>",
+    placeholder: "<%= theme.valine.placeholder || '说点什么吧...' %>", // 默认占位符
+    pageSize: parseInt('<%= theme.valine.pageSize || 10 %>'), // 转换为整数，默认每页10条
+    avatar: "<%= theme.valine.avatar || 'mp' %>", // 默认头像样式
+    lang: "<%= theme.valine.lang || 'zh-cn' %>", // 默认语言
+    visitor: String('<%= theme.valine.visitor %>').toLowerCase() === 'true', // 文章阅读量统计（可选）
+    // 其他可选配置项，根据需要添加：
+    // path: window.location.pathname, // 如果需要自定义 path，通常默认即可
+    // highlight: true, // 启用代码高亮
+    // powerMode: true, // 启用 Valine 动效模式
+    guest_info: filtered_guest_info // 将过滤后的 guest_info 数组传递给 Valine
+  });
+</script>
+<% } %>
