@@ -100,7 +100,7 @@ theme: cold-stone
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: firebase
 # RSS Feed
 feed:
   type: atom
