@@ -1,21 +1,12 @@
-{
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/posts/**",
-        "destination": "/posts/index.html"
-      },
-      {
-        "source": "/archives/**",
-        "destination": "/archives/index.html"
-      }
-      // 添加其他分类、标签页面的重写规则
-    ]
-  }
-}
+
+        {
+            "hosting": {
+                "public": "public",
+                "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+                ]
+            }
+        }      
+    

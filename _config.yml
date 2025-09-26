@@ -104,22 +104,8 @@ theme: cold-stone
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  # 您的 Git 仓库地址 (使用 HTTPS 或 SSH 均可)
-  # HTTPS 格式 (推荐，但可能需要输入密码/Token): 
-  # https://github.com/dev-droid/my-hexo-blog.git
-  # SSH 格式 (推荐使用 SSH Key):
-  # git@github.com:dev-droid/my-hexo-blog.git
-  repo: https://github.com/dev-droid/my-hexo-blog.git
-  
-  # 项目页面通常需要推送到 'gh-pages' 分支
-  branch: gh-pages
-  
-  # 部署时的 Git 提交信息 (可选)
-  message: "更新时间: {{ now('YYYY-MM-DD HH:mm:ss') }}"
-
-  type: firebase
->>>>>>> 7b046aa5e39f95226d111b479fff31b4d0b4d880
+    type: ''
+    project_id: ''
 # RSS Feed
 feed:
   type: atom
