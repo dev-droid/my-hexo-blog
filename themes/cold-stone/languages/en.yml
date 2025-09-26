@@ -1,0 +1,33 @@
+title: Your Blog Title
+
+nav:
+  home: HOME
+  tags: TAGS
+  about: ABOUT
+  projects: PROJECTS
+  friends: FRIENDS
+  archives: ARCHIVES
+  categories: CATEGORIES
+
+post:
+  postTime: Post
+  updateTime: Last Update
+  tags: Tags
+  more: Read more
+  wordCount: Word Count
+  readingTime: Reading Time
+  notMore: Not More
+  readed: Readed
+
+search: Search
+
+page:
+  previous: previous
+  next: next
+
+blog:
+  totalpost: Total
+  wordcount: Blog Word Count
+  visitcount: Blog Visit Count
+
+back: Back

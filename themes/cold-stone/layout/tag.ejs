@@ -1,0 +1,36 @@
+<article class="article slide-in-right uk-article">
+  <section class="article-header">
+    <h1 class="article-title uk-article-title">
+      # <%= page.tag %> &nbsp;<small><%= page.posts.length %> 篇</small>
+    </h1>
+    <hr>
+  </section>
+
+  <section class="tag-post-list">
+    <% page.posts.forEach(function(post){ %>
+      <div class="card uk-article uk-margin-medium-bottom">
+        <h2 class="uk-article-title">
+          <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+        </h2>
+        <p class="uk-article-meta">
+          <span class="meta-info">
+            <span>
+              <%- __('post.postTime') %>:
+              <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+            </span>
+            <span><%- __('post.wordCount') %>: <%= post.wordcount || 'N/A' %></span>
+          </span>
+        </p>
+
+        <div class="article-content">
+          <%- post.excerpt || post.content.substring(0, 200) %>
+        </div>
+
+        <div class="read-more uk-margin-top">
+          <a class="link" href="<%- url_for(post.path) %>"><%- __('post.more') %> &rarr;</a>
+        </div>
+      </div>
+    <% }) %>
+  </section>
+  
+</article>
