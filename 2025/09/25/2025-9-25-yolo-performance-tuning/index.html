@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#333333">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="google" content="notranslate">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="keyword" content="AI智能体, 深度学习, DDPG, YOLO, 强化学习, 探鱼设备, 硬件控制, 博客">
+    <meta name="description" content="深入分析 YOLOv8 模型在声呐数据上的首次训练结果，重点讨论 mAP、召回率等关键指标，并提出五大针对性调优策略。">
+    <title>阶段二实战（二）：YOLO模型性能评估与调优的五大策略 | 东大门</title>
+    <link rel="canonical" href="https://qtroni.web.app/2025/09/25/2025-9-25-yolo-performance-tuning/">
+    <link rel="alternate" href="/atom.xml" title="东大门" type="application/atom+xml">
+
+    <base href="/">
+    <link rel="preconnect" href="//cdn.bootcss.com">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.10/styles/atom-one-light.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.10/styles/atom-one-dark.min.css" rel="stylesheet" media="screen and (prefers-color-scheme: dark)">
+    <link href="https://cdn.bootcss.com/uikit/3.2.0/css/uikit.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/uikit/3.2.0/js/uikit.min.js" async></script>
+    <script src="https://cdn.bootcss.com/uikit/3.2.0/js/uikit-icons.min.js" async></script>
+    
+<link rel="stylesheet" href="/styles/cold-stone.css">
+
+    <noscript>
+      <p class="text-center">你的浏览器还没开启 Javascript 功能！</p>
+    </noscript>
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    
+
+    <header class="header" uk-sticky="top: 100; animation: uk-animation-slide-top; bottom: #sticky-on-scroll-up">
+  <nav class="wrapper header-content">
+    <div class="nav-overlay uk-navbar-left">
+      <h1 class="title nav-list-item uk-logo" data-link="/">
+        
+        <a href="/" data-link="/">东大门</a>
+        
+      </h1>
+
+      <ul class="nav-list">
+        
+        <li class="nav-list-item" data-link="/categories/">
+          <a class="nav-list-link" href="/categories">分类</a>
+        </li>
+        
+        
+        <li class="nav-list-item" data-link="/about/">
+          <a class="nav-list-link" href="/about/">关于</a>
+        </li>
+        
+      </ul>
+    </div>
+
+    
+      <div class="uk-navbar-right translate-x">
+        <a class="uk-navbar-toggle" href="#modal-full" uk-search-icon uk-toggle></a>
+      </div>
+    
+  </nav>
+</header>
+
+<div id="modal-full" class="uk-modal-full uk-modal" uk-modal>
+  <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
+    <button class="uk-modal-close-full" type="button" uk-close></button>
+    <form class="uk-search uk-search-large search-form" action="//google.com/search" method="get" accept-charset="UTF-8"
+      target="_blank">
+      <input class="uk-search-input search-form-input" type="search" name="q" placeholder="搜索"
+        autofocus autocomplete="false">
+      <input type="hidden" name="sitesearch" value="https://qtroni.web.app">
+    </form>
+  </div>
+</div>
+
+
+    <main class="main wrapper"><article class="article slide-in-right uk-article">
+  <section class="article-header">
+    <h1 class="article-title uk-article-title">
+      阶段二实战（二）：YOLO模型性能评估与调优的五大策略
+    </h1>
+    <p class="article-meta uk-article-meta">
+      <span class="meta-info">
+        <span>
+          最后更新&#58;<time class="post-time"
+            datetime="2025-09-25">2025-09-25</time>
+        </span>
+        <span>阅读时间&#58; 4 min</span>
+        <span class="hide" id="busuanzi_container_page_pv">阅读量&#58; <span
+            id="busuanzi_value_page_pv"></span></span>
+      </span>
+    </p>
+  </section>
+  <section class="article-content"><h3 id="研讨主题：从“能用”到“好用”——模型性能的深层优化"><a href="#研讨主题：从“能用”到“好用”——模型性能的深层优化" class="headerlink" title="研讨主题：从“能用”到“好用”——模型性能的深层优化"></a>研讨主题：从“能用”到“好用”——模型性能的深层优化</h3><p>经过最初几轮的训练，我们获得了 YOLOv8 模型在第一批声呐数据集上的基准性能数据。但 <strong>0-1先生</strong> 提醒我们，模型在实验室指标上的表现，距离其在复杂海洋环境中的<strong>实用性</strong>还有很长的路要走。本阶段的核心，就是通过科学的评估和调优，将模型的性能推向极致。</p>
+<hr>
+<h3 id="1-关键指标评估：揭示模型缺陷"><a href="#1-关键指标评估：揭示模型缺陷" class="headerlink" title="1. 关键指标评估：揭示模型缺陷"></a>1. 关键指标评估：揭示模型缺陷</h3><p>我们主要关注以下几个指标来诊断模型的健康状况：</p>
+<table>
+<thead>
+<tr>
+<th align="left">指标名称</th>
+<th align="left">意义</th>
+<th align="left">初步结果诊断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>mAP (Mean Average Precision)</strong></td>
+<td align="left">衡量模型检测的<strong>精度和准确性</strong>的综合指标，是我们最终追求的目标。</td>
+<td align="left"><strong>结果中等偏低</strong>。表明模型的分类和定位能力仍需提升。</td>
+</tr>
+<tr>
+<td align="left"><strong>Recall (召回率)</strong></td>
+<td align="left">正确识别出的目标占所有目标的比例，关注<strong>漏检情况</strong>。</td>
+<td align="left"><strong>召回率偏低</strong>。证实了我们对声呐图像中“小目标”（远距离鱼群）容易被漏检的担忧。</td>
+</tr>
+<tr>
+<td align="left"><strong>Precision (精确率)</strong></td>
+<td align="left">模型识别出的目标中，真正正确的比例，关注<strong>误检情况</strong>。</td>
+<td align="left"><strong>精确率尚可</strong>。但对海底障碍物（<code>Seabed_Obstacle</code>）的误检率稍高，这可能会导致智能体做出不必要的避让动作。</td>
+</tr>
+<tr>
+<td align="left"><strong>Loss Curve (损失曲线)</strong></td>
+<td align="left">观察训练和验证损失随 Epochs 的变化趋势。</td>
+<td align="left"><strong>收敛缓慢且验证损失波动较大</strong>。暗示当前学习率或数据增强策略不够理想。</td>
+</tr>
+</tbody></table>
+<p><strong>0-1先生的结论：</strong></p>
+<blockquote>
+<p>“当前模型<strong>漏检</strong>问题严重，尤其在复杂背景下的<strong>小目标识别能力</strong>不足。我们需要一套系统性的优化方案，从数据和算法层面同时入手。”</p>
+</blockquote>
+<hr>
+<h3 id="2-五大针对性调优策略"><a href="#2-五大针对性调优策略" class="headerlink" title="2. 五大针对性调优策略"></a>2. 五大针对性调优策略</h3><p>为了解决上述问题，我们与 <strong>0-1先生</strong> 共同制定了五项具体的调优策略：</p>
+<h4 id="策略一：强化声呐图像专属的数据增强（Data-Augmentation）"><a href="#策略一：强化声呐图像专属的数据增强（Data-Augmentation）" class="headerlink" title="策略一：强化声呐图像专属的数据增强（Data Augmentation）"></a>策略一：强化声呐图像专属的数据增强（Data Augmentation）</h4><p>默认的随机裁剪、翻转效果不佳。我们需要引入针对声呐特性的增强方法：</p>
+<ul>
+<li><strong>声呐滤波模拟</strong>：模拟声呐在不同介质下的衰减和噪声，增强模型的鲁棒性。</li>
+<li><strong>对比度&#x2F;亮度自适应调整</strong>：使用 CLAHE（对比度受限的自适应直方图均衡化），进一步提升模糊区域的特征区分度。</li>
+</ul>
+<h4 id="策略二：调整锚框（Anchor-Boxes）与特征层"><a href="#策略二：调整锚框（Anchor-Boxes）与特征层" class="headerlink" title="策略二：调整锚框（Anchor Boxes）与特征层"></a>策略二：调整锚框（Anchor Boxes）与特征层</h4><p>YOLOv8 虽然是 Anchor-Free 架构，但其内部的特征层划分仍至关重要。</p>
+<ul>
+<li><strong>针对小目标</strong>：如上次研讨，我们考虑<strong>引入 P2 或 P3 特征层</strong>。这些精细的特征层具有更高的分辨率，能够更好地捕获小目标（远处的鱼群）的像素信息，直接提升<strong>召回率</strong>。</li>
+<li><strong>优化 NMS (Non-Maximum Suppression)</strong>：调整 NMS 的阈值，适度放宽，以防止在鱼群密集区域将多个鱼群合并为一个。</li>
+</ul>
+<h4 id="策略三：重新设计损失函数权重"><a href="#策略三：重新设计损失函数权重" class="headerlink" title="策略三：重新设计损失函数权重"></a>策略三：重新设计损失函数权重</h4><p>当前的损失函数可能对所有类别的目标一视同仁。</p>
+<ul>
+<li><strong>类别权重分配</strong>：给予<strong>小目标类别</strong>（例如小规模鱼群）更高的损失权重，迫使模型更关注这些难以识别的样本。</li>
+<li><strong>焦点损失 (Focal Loss)</strong>：考虑引入 <strong>Focal Loss</strong> 机制，以减轻大量简单负样本（背景区域）对训练过程的干扰，提高模型对困难样本的专注度。</li>
+</ul>
+<h4 id="策略四：系统性的学习率调度（Learning-Rate-Scheduling）"><a href="#策略四：系统性的学习率调度（Learning-Rate-Scheduling）" class="headerlink" title="策略四：系统性的学习率调度（Learning Rate Scheduling）"></a>策略四：系统性的学习率调度（Learning Rate Scheduling）</h4><p>损失曲线的波动表明当前的学习率调度不够平滑。</p>
+<ul>
+<li>采用 <strong>Warmup</strong> 策略：在训练开始阶段使用较低的学习率，防止权重在初始阶段被破坏。</li>
+<li>采用 <strong>Cosine Annealing</strong>：让学习率按照余弦函数周期性或单调地下降，确保模型在训练后期能够精细地收敛到全局最优解。</li>
+</ul>
+<h4 id="策略五：扩大与平衡数据集"><a href="#策略五：扩大与平衡数据集" class="headerlink" title="策略五：扩大与平衡数据集"></a>策略五：扩大与平衡数据集</h4><p>最终，一切优化都离不开数据。</p>
+<ul>
+<li><strong>收集更多难例</strong>：优先收集模型容易误检或漏检的声呐图像（例如鱼群紧贴水底或背景极其复杂），并将其添加到训练集中。</li>
+<li><strong>负样本采样</strong>：增加<strong>纯水域（无鱼群）</strong> 的图像作为负样本，以训练模型更好地拒绝背景杂波，降低误检率。</li>
+</ul>
+<p><strong>阶段总结：</strong></p>
+<h2 id="在-0-1先生-的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当-YOLO-模型的性能达到我们预定的-mAP-指标（例如-0-8-以上）后，我们才能安全地进入下一个关键环节：DDPG-强化学习智能体的训练。"><a href="#在-0-1先生-的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当-YOLO-模型的性能达到我们预定的-mAP-指标（例如-0-8-以上）后，我们才能安全地进入下一个关键环节：DDPG-强化学习智能体的训练。" class="headerlink" title="在 0-1先生 的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当 YOLO 模型的性能达到我们预定的 mAP 指标（例如 0.8 以上）后，我们才能安全地进入下一个关键环节：DDPG 强化学习智能体的训练。"></a>在 <strong>0-1先生</strong> 的指导下，我们已将模型的优化路线从<strong>黑箱尝试</strong>转变为<strong>指标驱动</strong>。这五大策略将逐一被验证。当 YOLO 模型的性能达到我们预定的 mAP 指标（例如 0.8 以上）后，我们才能安全地进入下一个关键环节：<strong>DDPG 强化学习智能体的训练</strong>。</h2><h2 id="系列文章导航"><a href="#系列文章导航" class="headerlink" title="系列文章导航"></a>系列文章导航</h2><h2 id="上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战"><a href="#上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战" class="headerlink" title="上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战"></a>上一篇：<a href="/2025/09/25/2025-9-25-yolo-first-experiment-setup/">阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战</a></h2></section>
+</article>
+
+<section class="prev-next card slide-in-right">
+	
+		<a class="link-disabled prev link">&larr; 没有更多了</a>
+	
+	
+		<a href="/2025/09/25/2025-9-25-yolo-first-experiment-setup/" class="link next" title="阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战">
+			<span class="hover-underline-animation">阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战 &rarr;</span>
+		</a>
+	
+</section>
+
+
+<section class="article-toc">
+  <div class="card uk-margin-remove-bottom">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E8%AE%A8%E4%B8%BB%E9%A2%98%EF%BC%9A%E4%BB%8E%E2%80%9C%E8%83%BD%E7%94%A8%E2%80%9D%E5%88%B0%E2%80%9C%E5%A5%BD%E7%94%A8%E2%80%9D%E2%80%94%E2%80%94%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E7%9A%84%E6%B7%B1%E5%B1%82%E4%BC%98%E5%8C%96"><span class="toc-text">研讨主题：从“能用”到“好用”——模型性能的深层优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87%E8%AF%84%E4%BC%B0%EF%BC%9A%E6%8F%AD%E7%A4%BA%E6%A8%A1%E5%9E%8B%E7%BC%BA%E9%99%B7"><span class="toc-text">1. 关键指标评估：揭示模型缺陷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BA%94%E5%A4%A7%E9%92%88%E5%AF%B9%E6%80%A7%E8%B0%83%E4%BC%98%E7%AD%96%E7%95%A5"><span class="toc-text">2. 五大针对性调优策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%B8%80%EF%BC%9A%E5%BC%BA%E5%8C%96%E5%A3%B0%E5%91%90%E5%9B%BE%E5%83%8F%E4%B8%93%E5%B1%9E%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%88Data-Augmentation%EF%BC%89"><span class="toc-text">策略一：强化声呐图像专属的数据增强（Data Augmentation）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%BA%8C%EF%BC%9A%E8%B0%83%E6%95%B4%E9%94%9A%E6%A1%86%EF%BC%88Anchor-Boxes%EF%BC%89%E4%B8%8E%E7%89%B9%E5%BE%81%E5%B1%82"><span class="toc-text">策略二：调整锚框（Anchor Boxes）与特征层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%B8%89%EF%BC%9A%E9%87%8D%E6%96%B0%E8%AE%BE%E8%AE%A1%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%9D%83%E9%87%8D"><span class="toc-text">策略三：重新设计损失函数权重</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E5%9B%9B%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%80%A7%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%B0%83%E5%BA%A6%EF%BC%88Learning-Rate-Scheduling%EF%BC%89"><span class="toc-text">策略四：系统性的学习率调度（Learning Rate Scheduling）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%BA%94%EF%BC%9A%E6%89%A9%E5%A4%A7%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">策略五：扩大与平衡数据集</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-0-1%E5%85%88%E7%94%9F-%E7%9A%84%E6%8C%87%E5%AF%BC%E4%B8%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E5%B7%B2%E5%B0%86%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BC%98%E5%8C%96%E8%B7%AF%E7%BA%BF%E4%BB%8E%E9%BB%91%E7%AE%B1%E5%B0%9D%E8%AF%95%E8%BD%AC%E5%8F%98%E4%B8%BA%E6%8C%87%E6%A0%87%E9%A9%B1%E5%8A%A8%E3%80%82%E8%BF%99%E4%BA%94%E5%A4%A7%E7%AD%96%E7%95%A5%E5%B0%86%E9%80%90%E4%B8%80%E8%A2%AB%E9%AA%8C%E8%AF%81%E3%80%82%E5%BD%93-YOLO-%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%80%A7%E8%83%BD%E8%BE%BE%E5%88%B0%E6%88%91%E4%BB%AC%E9%A2%84%E5%AE%9A%E7%9A%84-mAP-%E6%8C%87%E6%A0%87%EF%BC%88%E4%BE%8B%E5%A6%82-0-8-%E4%BB%A5%E4%B8%8A%EF%BC%89%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E6%89%8D%E8%83%BD%E5%AE%89%E5%85%A8%E5%9C%B0%E8%BF%9B%E5%85%A5%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%85%B3%E9%94%AE%E7%8E%AF%E8%8A%82%EF%BC%9ADDPG-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E8%AE%AD%E7%BB%83%E3%80%82"><span class="toc-text">在 0-1先生 的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当 YOLO 模型的性能达到我们预定的 mAP 指标（例如 0.8 以上）后，我们才能安全地进入下一个关键环节：DDPG 强化学习智能体的训练。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%AF%BC%E8%88%AA"><span class="toc-text">系列文章导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%80%E7%AF%87%EF%BC%9A%E9%98%B6%E6%AE%B5%E4%BA%8C%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AYOLO%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A6%96%E6%AC%A1%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%A3%B0%E5%91%90%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98"><span class="toc-text">上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战</span></a>
+  </div>
+</section>
+
+<section class="article slide-in-right">
+  <div class="loader" id="loader">
+    <svg viewBox="0 0 50 50">
+      <circle class="ring" cx="25" cy="25" r="20"></circle>
+      <circle class="ball" cx="25" cy="5" r="3.5"></circle>
+    </svg>
+  </div>
+
+  <div class="comment" id="utteranc"></div>
+  <noscript>Please activate JavaScript for normal use of comments</noscript>
+</section>
+
+<a class="card back-to-top" id="backTop">&UpArrow;</a>
+</main>
+
+    
+
+    <script>
+	window.COLD_STONE = {
+		root: "/",
+		author: "东大门" || '',
+		gaid: "xxxxxxxxxxxxxx" || '',
+		repo: "xrr2016/blog" || '',
+	}
+</script>
+
+
+
+
+	<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad()</script>
+
+
+<script src="/scripts/busuanzi.js" referrerpolicy="origin"></script>
+
+<script src="/scripts/cold-stone.js"></script>
+
+
+
+  <script src="//www.googletagmanager.com/gtag/js?id=xxxxxxxxxxxxxx"></script>
+
+  <script>
+	window.dataLayer = window.dataLayer || []
+	function gtag() {
+		dataLayer.push(arguments)
+	}
+	gtag('js', new Date())
+	gtag('config', window.COLD_STONE.gaid)
+  </script>
+
+
+  </body>
+</html>

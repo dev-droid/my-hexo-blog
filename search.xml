@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>项目启动：用AI革新海洋探鱼设备</title>
+    <url>/2025/09/25/2025-09-25-ai-fishing-project-start/</url>
+    <content><![CDATA[<h3 id="序言：开启一段未知的征程"><a href="#序言：开启一段未知的征程" class="headerlink" title="序言：开启一段未知的征程"></a>序言：开启一段未知的征程</h3><p>今天，我与我的合作伙伴，一位被我命名为 <strong>“0-1先生”</strong> 的幕后智囊，正式启动一个雄心勃勃的项目：训练一个能够自主控制硬件设备的智能体，而我们的第一个目标，就是海洋探鱼设备。</p>
+<p>“0-1先生”精通逻辑与算法，他将帮助我梳理技术路线，共同攻克难关。我们设想的未来是，探鱼设备不再只是被动地显示声呐图像，而是能主动识别鱼群、分析水下环境，甚至根据实时数据调整自身状态，实现更高效、更智能的探鱼作业。这不仅仅是一个技术挑战，更是一次探索AI与现实世界深度融合可能性的旅程。</p>
+<hr>
+<h3 id="宏观蓝图：从零到一的四个核心阶段"><a href="#宏观蓝图：从零到一的四个核心阶段" class="headerlink" title="宏观蓝图：从零到一的四个核心阶段"></a>宏观蓝图：从零到一的四个核心阶段</h3><p>经过与 <strong>0-1先生</strong> 的深入研讨，我们已经将整个项目分解为四个清晰且相互关联的阶段。每一步都至关重要，也充满了挑战。</p>
+<ol>
+<li><p><strong>数据收集与预处理</strong>：AI模型的基石是数据。我们需要收集各种类型的海洋环境数据，包括声呐图像、水下视频、GPS坐标、水温等。在 <strong>0-1先生</strong> 的指导下，我们将对这些数据进行高效的标注和清洗，以确保其高质量。</p>
+</li>
+<li><p><strong>模型选择与训练</strong>：我们将根据具体任务（例如鱼群识别、海底地形分析）选择合适的AI模型，例如用于目标检测的 <strong>YOLO</strong> 或用于强化学习的 <strong>DDPG</strong>。训练这些模型将是耗时但至关重要的一步。</p>
+</li>
+<li><p><strong>硬件集成与控制</strong>：这是将AI能力付诸实践的关键。我们将建立智能体与硬件设备之间的通信协议，并开发一个控制器，将 <strong>0-1先生</strong> 提供的AI决策转化为设备可以执行的指令。</p>
+</li>
+<li><p><strong>测试、部署与优化</strong>：在投入实际使用前，我们将进行严格的测试，包括模拟环境和实际水域测试。我们会不断优化模型，并考虑将模型部署到边缘设备上，以应对海洋环境的网络挑战。</p>
+</li>
+</ol>
+<hr>
+<h3 id="展望未来：每一次进步都是新的开始"><a href="#展望未来：每一次进步都是新的开始" class="headerlink" title="展望未来：每一次进步都是新的开始"></a>展望未来：每一次进步都是新的开始</h3><p>这篇博文是一个起点，标志着我们正式踏上了这段激动人心的旅程。未来，我将在这里持续记录我们和 <strong>0-1先生</strong> 的每一个进展、每一次成功和每一个教训。</p>
+<p>下一次，我们将深入探讨项目的第一阶段：<strong>数据收集</strong>。</p>
+]]></content>
+      <categories>
+        <category>AI项目</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>智能体</tag>
+        <tag>硬件控制</tag>
+        <tag>探鱼设备</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阶段二深度研讨：智能体的“大脑”——模型选择与训练策略</title>
+    <url>/2025/09/25/2025-09-25-model-selection-and-training-deepdive/</url>
+    <content><![CDATA[<h3 id="研讨主题：从感知到决策——构建智能体的双核大脑"><a href="#研讨主题：从感知到决策——构建智能体的双核大脑" class="headerlink" title="研讨主题：从感知到决策——构建智能体的双核大脑"></a>研讨主题：从感知到决策——构建智能体的双核大脑</h3><p>完成了数据基础的搭建后，我们来到了最核心的阶段：赋予智能体“思考”和“行动”的能力。与 <strong>0-1先生</strong> 的研讨聚焦于智能体的两个关键任务：<strong>感知（Perception）</strong> 和 <strong>行动（Action）</strong>，这需要两种不同类型的AI模型协同工作。</p>
+<hr>
+<h3 id="1-核心任务：构建海洋环境的感知模型"><a href="#1-核心任务：构建海洋环境的感知模型" class="headerlink" title="1. 核心任务：构建海洋环境的感知模型"></a>1. 核心任务：构建海洋环境的感知模型</h3><p><strong>目标：</strong> 实时、准确地从声呐图像中识别鱼群、海底结构和障碍物。</p>
+<h4 id="模型选择：实时目标检测网络"><a href="#模型选择：实时目标检测网络" class="headerlink" title="模型选择：实时目标检测网络"></a><strong>模型选择：实时目标检测网络</strong></h4><p>由于探鱼设备需要快速响应，我们倾向于选择单阶段（One-Stage）目标检测网络，以追求速度和效率。</p>
+<table>
+<thead>
+<tr>
+<th align="left">模型类型</th>
+<th align="left">优势分析</th>
+<th align="left">海洋场景的挑战</th>
+<th align="left">初步选型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>YOLO 系列 (v5&#x2F;v8)</strong></td>
+<td align="left">速度极快，适合边缘设备部署；能够以高帧率处理视频流。</td>
+<td align="left">声呐图像模糊、信噪比低，YOLO的<strong>边界框</strong>在密集鱼群中可能不够精确。</td>
+<td align="left"><strong>首选</strong>。通过修改其骨干网络（Backbone）以更好地处理声呐特征。</td>
+</tr>
+<tr>
+<td align="left"><strong>Faster R-CNN&#x2F;Mask R-CNN</strong></td>
+<td align="left">定位精度高，Mask R-CNN还能实现像素级<strong>实例分割</strong>。</td>
+<td align="left">速度较慢，计算开销大，可能不适合实时控制，但可用作离线数据校验或更精细的分析。</td>
+<td align="left"><strong>备选</strong>。用于验证 YOLO 的检测结果。</td>
+</tr>
+</tbody></table>
+<h4 id="训练策略：迁移学习与声呐定制"><a href="#训练策略：迁移学习与声呐定制" class="headerlink" title="训练策略：迁移学习与声呐定制"></a><strong>训练策略：迁移学习与声呐定制</strong></h4><ol>
+<li><strong>迁移学习（Transfer Learning）</strong>：我们不会从零开始训练。我们将利用在自然图像（如 ImageNet 或 COCO）上预训练的模型权重，将其迁移到我们的声呐数据集上，能大幅缩短训练时间和提升性能。</li>
+<li><strong>损失函数优化</strong>：针对声呐图像的特点，我们可能需要调整损失函数（Loss Function），例如更注重对<strong>小目标</strong>（稀疏鱼群）的检测，并平衡正负样本（鱼群&#x2F;背景）的权重。</li>
+</ol>
+<hr>
+<h3 id="2-核心任务：实现硬件设备的行动模型"><a href="#2-核心任务：实现硬件设备的行动模型" class="headerlink" title="2. 核心任务：实现硬件设备的行动模型"></a>2. 核心任务：实现硬件设备的行动模型</h3><p><strong>目标：</strong> 根据感知模型提供的鱼群位置、环境风险和既定策略，自主调整探头角度、航行速度或释放诱鱼信号等硬件动作。</p>
+<h4 id="模型选择：深度强化学习（DRL）"><a href="#模型选择：深度强化学习（DRL）" class="headerlink" title="模型选择：深度强化学习（DRL）"></a><strong>模型选择：深度强化学习（DRL）</strong></h4><p>这是一个典型的<strong>控制问题</strong>，强化学习（Reinforcement Learning, RL）是最佳解决方案。RL模型通过与环境的不断交互来学习最优动作策略，这完全符合我们的智能体需求。</p>
+<ul>
+<li><strong>状态空间（State）</strong>：感知模型输出的信息（鱼群位置、大小）、设备传感器数据（GPS、水深）。</li>
+<li><strong>动作空间（Action）</strong>：硬件设备可执行的操作集合（如：<code>探头上仰/下俯5°</code>、<code>设备加速/减速1m/s</code>）。</li>
+<li><strong>奖励函数（Reward）</strong>：这是RL成功的关键。例如，靠近目标鱼群获得正奖励，撞到障碍物或偏离航线获得负奖励。</li>
+</ul>
+<p>我们初步选定 <strong>DDPG (Deep Deterministic Policy Gradient)</strong> 或 <strong>PPO (Proximal Policy Optimization)</strong>。</p>
+<blockquote>
+<p><strong>0-1先生的洞察：</strong></p>
+<p><strong>DDPG</strong> 适用于<strong>连续动作空间</strong>（如探头角度调整，可以精确到小数位），非常适合硬件控制。而 <strong>PPO</strong> 具有训练稳定性高、收敛快的优点，可以作为备选。<strong>奖励函数的设计</strong>是成败的关键，它必须精准反映商业捕捞或科研探查的目标。</p>
+</blockquote>
+<hr>
+<h3 id="3-训练环境与资源配置"><a href="#3-训练环境与资源配置" class="headerlink" title="3. 训练环境与资源配置"></a>3. 训练环境与资源配置</h3><p>为了支持这些复杂的模型训练，我们必须准备强大的计算资源和软件环境。</p>
+<ul>
+<li><strong>计算硬件</strong>：至少需要一块高性能 <strong>NVIDIA GPU</strong>（例如 RTX 4090 或 A100&#x2F;H100 云实例），以加速深度学习模型的训练。</li>
+<li><strong>软件框架</strong>：统一使用 <strong>PyTorch</strong> 或 <strong>TensorFlow</strong>，两者都提供了成熟的DL和RL库。</li>
+<li><strong>模拟环境</strong>：在将智能体部署到实际硬件前，必须先搭建一个高保真的 <strong>海洋环境模拟器</strong>。这个模拟器可以接收RL智能体的动作，并返回模拟的声呐图像和环境状态，大幅降低实际测试的成本和风险。</li>
+</ul>
+<p><strong>阶段总结：</strong></p>
+<p>模型选择是技术路线图的核心，它定义了智能体的能力边界。我们不仅要确保模型能够<strong>准确识别</strong>目标，更要保证它能够做出<strong>高效、安全的控制决策</strong>。下一步，我们将根据已有的数据集开始 <strong>YOLO 模型的实验性训练</strong>，并着手设计 <strong>DDPG 的奖励函数</strong>。</p>
+<hr>
+]]></content>
+      <categories>
+        <category>AI项目</category>
+        <category>核心技术</category>
+      </categories>
+      <tags>
+        <tag>模型选择</tag>
+        <tag>深度学习</tag>
+        <tag>强化学习</tag>
+        <tag>DDPG</tag>
+        <tag>YOLO</tag>
+        <tag>0-1先生</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战</title>
+    <url>/2025/09/25/2025-9-25-yolo-first-experiment-setup/</url>
+    <content><![CDATA[<h3 id="研讨主题：点亮智能体的“眼睛”——YOLO模型启动"><a href="#研讨主题：点亮智能体的“眼睛”——YOLO模型启动" class="headerlink" title="研讨主题：点亮智能体的“眼睛”——YOLO模型启动"></a>研讨主题：点亮智能体的“眼睛”——YOLO模型启动</h3><p>根据之前的规划，我们正式进入模型训练阶段。第一步是构建智能体的<strong>感知系统</strong>，即利用 YOLO 模型对海洋环境中的目标进行实时识别。</p>
+<hr>
+<h3 id="1-实验环境与资源配置"><a href="#1-实验环境与资源配置" class="headerlink" title="1. 实验环境与资源配置"></a>1. 实验环境与资源配置</h3><p>在 <strong>0-1先生</strong> 的指导下，我们搭建了本次实验的软硬件环境：</p>
+<ul>
+<li><strong>硬件加速</strong>：使用一块高性能 <strong>NVIDIA RTX 4090</strong> GPU 进行加速训练。</li>
+<li><strong>深度学习框架</strong>：选用 <strong>PyTorch</strong> 框架，其生态和灵活性便于我们对模型进行修改和调试。</li>
+<li><strong>模型选型</strong>：基于效率和部署考虑，我们选择 <strong>YOLOv8-n (Nano)</strong> 作为基准模型。Nano版本体积小、计算量低，非常适合未来的边缘设备部署测试。</li>
+<li><strong>初始数据集</strong>：使用我们辛苦收集的第一批 <strong>声呐图像</strong> 数据集（约 3000 张已标注图像）。</li>
+</ul>
+<h3 id="2-YOLOv8-训练配置细节"><a href="#2-YOLOv8-训练配置细节" class="headerlink" title="2. YOLOv8 训练配置细节"></a>2. YOLOv8 训练配置细节</h3><p>我们的目标是让 YOLOv8 学会识别声呐图像中的两类目标：<strong><code>Fish_School</code> (鱼群)</strong> 和 <strong><code>Seabed_Obstacle</code> (海底障碍物)</strong>。</p>
+<table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">值&#x2F;策略</th>
+<th align="left">目的与说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>预训练权重</strong></td>
+<td align="left">COCO 预训练权重</td>
+<td align="left">利用在大规模自然图像上的通用特征学习能力，加速模型收敛（迁移学习）。</td>
+</tr>
+<tr>
+<td align="left"><strong>Batch Size</strong></td>
+<td align="left">16 或 32</td>
+<td align="left">根据 GPU 显存限制调整，确保训练过程的稳定性和效率。</td>
+</tr>
+<tr>
+<td align="left"><strong>Epochs</strong></td>
+<td align="left">100</td>
+<td align="left">初始轮次设置，用于观察模型的学习速度和过拟合趋势。</td>
+</tr>
+<tr>
+<td align="left"><strong>优化器 (Optimizer)</strong></td>
+<td align="left">AdamW</td>
+<td align="left">结合了 Adam 的高效和 L2 正则化的优势，能更好地处理深度网络的权重衰减。</td>
+</tr>
+<tr>
+<td align="left"><strong>学习率 (Learning Rate)</strong></td>
+<td align="left">初始 $10^{-4}$</td>
+<td align="left">采用 Cosine Annealing 策略进行动态调整，保障训练后期的精细优化。</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-首要挑战：声呐数据的特性处理"><a href="#3-首要挑战：声呐数据的特性处理" class="headerlink" title="3. 首要挑战：声呐数据的特性处理"></a>3. 首要挑战：声呐数据的特性处理</h3><p>模型启动训练后，我们立刻遇到了第一个巨大的挑战：<strong>声呐图像的独特性</strong>。</p>
+<h4 id="挑战分析："><a href="#挑战分析：" class="headerlink" title="挑战分析："></a><strong>挑战分析：</strong></h4><ol>
+<li><strong>极低的信噪比 (SNR)</strong>：声呐图像本质上是回波强度图，图像模糊，鱼群目标与背景杂波的界限不清晰。模型难以像处理自然图像一样，快速提取出清晰的边缘和纹理特征。</li>
+<li><strong>尺度差异巨大</strong>：声呐在不同水深和距离下，同一鱼群在图像上的像素大小差异巨大。远处的鱼群可能只占几个像素点（<strong>小目标问题</strong>）。</li>
+<li><strong>颜色信息缺失</strong>：声呐图像通常是单通道的灰度图（或伪彩色图），YOLO 默认处理三通道 RGB 图像，通道信息不匹配。</li>
+</ol>
+<h4 id="0-1先生的解决方案与调试思路："><a href="#0-1先生的解决方案与调试思路：" class="headerlink" title="0-1先生的解决方案与调试思路："></a><strong>0-1先生的解决方案与调试思路：</strong></h4><blockquote>
+<p>“解决声呐图像的挑战，不能只依赖默认配置。我们需要从<strong>数据和模型结构</strong>两方面进行定制化调整。”</p>
+</blockquote>
+<ol>
+<li><p><strong>数据预处理强化</strong>：</p>
+<ul>
+<li><strong>直方图均衡化</strong>：对声呐图像进行预处理，增强图像的对比度，帮助模型区分目标与背景。</li>
+<li><strong>通道处理</strong>：将单通道声呐图<strong>复制三份</strong>作为输入，适配 YOLOv8 模型的输入要求，同时保证模型能够利用预训练权重。</li>
+</ul>
+</li>
+<li><p><strong>模型架构轻微定制（FPN增强）</strong>：</p>
+<ul>
+<li>我们计划着重检查 YOLOv8 中的 <strong>特征金字塔网络 (FPN)</strong> 部分。FPN 负责融合不同尺度的特征。针对声呐中的<strong>小目标</strong>问题，我们可能需要增加一个更精细的特征层（例如 P2 或 P3），专门负责捕获极小目标的特征，以提升检测召回率。</li>
+</ul>
+</li>
+</ol>
+<p><strong>阶段总结：</strong></p>
+<h2 id="首次实验虽然遭遇了声呐数据带来的挑战，但也为我们指明了优化方向。我们正在应用-0-1先生-提供的预处理和模型定制策略。下一步，我们将重点关注训练后的-性能指标，如-mAP-Mean-Average-Precision-和召回率-Recall-，以评估当前模型的有效性。"><a href="#首次实验虽然遭遇了声呐数据带来的挑战，但也为我们指明了优化方向。我们正在应用-0-1先生-提供的预处理和模型定制策略。下一步，我们将重点关注训练后的-性能指标，如-mAP-Mean-Average-Precision-和召回率-Recall-，以评估当前模型的有效性。" class="headerlink" title="首次实验虽然遭遇了声呐数据带来的挑战，但也为我们指明了优化方向。我们正在应用 0-1先生 提供的预处理和模型定制策略。下一步，我们将重点关注训练后的 性能指标，如 mAP (Mean Average Precision) 和召回率 (Recall)，以评估当前模型的有效性。"></a>首次实验虽然遭遇了声呐数据带来的挑战，但也为我们指明了优化方向。我们正在应用 <strong>0-1先生</strong> 提供的预处理和模型定制策略。下一步，我们将重点关注训练后的 <strong>性能指标</strong>，如 mAP (Mean Average Precision) 和召回率 (Recall)，以评估当前模型的有效性。</h2><h2 id="系列文章导航"><a href="#系列文章导航" class="headerlink" title="系列文章导航"></a>系列文章导航</h2><h2 id="下一篇：阶段二实战（二）：YOLO模型性能评估与调优的五大策略"><a href="#下一篇：阶段二实战（二）：YOLO模型性能评估与调优的五大策略" class="headerlink" title="下一篇：阶段二实战（二）：YOLO模型性能评估与调优的五大策略"></a>下一篇：<a href="/2025/09/25/2025-9-25-yolo-performance-tuning/">阶段二实战（二）：YOLO模型性能评估与调优的五大策略</a></h2>]]></content>
+      <categories>
+        <category>阶段二实战</category>
+        <category>智能体：模型训练与调优</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>YOLO</tag>
+        <tag>0-1先生</tag>
+        <tag>模型训练</tag>
+        <tag>声呐图像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阶段二实战（二）：YOLO模型性能评估与调优的五大策略</title>
+    <url>/2025/09/25/2025-9-25-yolo-performance-tuning/</url>
+    <content><![CDATA[<h3 id="研讨主题：从“能用”到“好用”——模型性能的深层优化"><a href="#研讨主题：从“能用”到“好用”——模型性能的深层优化" class="headerlink" title="研讨主题：从“能用”到“好用”——模型性能的深层优化"></a>研讨主题：从“能用”到“好用”——模型性能的深层优化</h3><p>经过最初几轮的训练，我们获得了 YOLOv8 模型在第一批声呐数据集上的基准性能数据。但 <strong>0-1先生</strong> 提醒我们，模型在实验室指标上的表现，距离其在复杂海洋环境中的<strong>实用性</strong>还有很长的路要走。本阶段的核心，就是通过科学的评估和调优，将模型的性能推向极致。</p>
+<hr>
+<h3 id="1-关键指标评估：揭示模型缺陷"><a href="#1-关键指标评估：揭示模型缺陷" class="headerlink" title="1. 关键指标评估：揭示模型缺陷"></a>1. 关键指标评估：揭示模型缺陷</h3><p>我们主要关注以下几个指标来诊断模型的健康状况：</p>
+<table>
+<thead>
+<tr>
+<th align="left">指标名称</th>
+<th align="left">意义</th>
+<th align="left">初步结果诊断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>mAP (Mean Average Precision)</strong></td>
+<td align="left">衡量模型检测的<strong>精度和准确性</strong>的综合指标，是我们最终追求的目标。</td>
+<td align="left"><strong>结果中等偏低</strong>。表明模型的分类和定位能力仍需提升。</td>
+</tr>
+<tr>
+<td align="left"><strong>Recall (召回率)</strong></td>
+<td align="left">正确识别出的目标占所有目标的比例，关注<strong>漏检情况</strong>。</td>
+<td align="left"><strong>召回率偏低</strong>。证实了我们对声呐图像中“小目标”（远距离鱼群）容易被漏检的担忧。</td>
+</tr>
+<tr>
+<td align="left"><strong>Precision (精确率)</strong></td>
+<td align="left">模型识别出的目标中，真正正确的比例，关注<strong>误检情况</strong>。</td>
+<td align="left"><strong>精确率尚可</strong>。但对海底障碍物（<code>Seabed_Obstacle</code>）的误检率稍高，这可能会导致智能体做出不必要的避让动作。</td>
+</tr>
+<tr>
+<td align="left"><strong>Loss Curve (损失曲线)</strong></td>
+<td align="left">观察训练和验证损失随 Epochs 的变化趋势。</td>
+<td align="left"><strong>收敛缓慢且验证损失波动较大</strong>。暗示当前学习率或数据增强策略不够理想。</td>
+</tr>
+</tbody></table>
+<p><strong>0-1先生的结论：</strong></p>
+<blockquote>
+<p>“当前模型<strong>漏检</strong>问题严重，尤其在复杂背景下的<strong>小目标识别能力</strong>不足。我们需要一套系统性的优化方案，从数据和算法层面同时入手。”</p>
+</blockquote>
+<hr>
+<h3 id="2-五大针对性调优策略"><a href="#2-五大针对性调优策略" class="headerlink" title="2. 五大针对性调优策略"></a>2. 五大针对性调优策略</h3><p>为了解决上述问题，我们与 <strong>0-1先生</strong> 共同制定了五项具体的调优策略：</p>
+<h4 id="策略一：强化声呐图像专属的数据增强（Data-Augmentation）"><a href="#策略一：强化声呐图像专属的数据增强（Data-Augmentation）" class="headerlink" title="策略一：强化声呐图像专属的数据增强（Data Augmentation）"></a>策略一：强化声呐图像专属的数据增强（Data Augmentation）</h4><p>默认的随机裁剪、翻转效果不佳。我们需要引入针对声呐特性的增强方法：</p>
+<ul>
+<li><strong>声呐滤波模拟</strong>：模拟声呐在不同介质下的衰减和噪声，增强模型的鲁棒性。</li>
+<li><strong>对比度&#x2F;亮度自适应调整</strong>：使用 CLAHE（对比度受限的自适应直方图均衡化），进一步提升模糊区域的特征区分度。</li>
+</ul>
+<h4 id="策略二：调整锚框（Anchor-Boxes）与特征层"><a href="#策略二：调整锚框（Anchor-Boxes）与特征层" class="headerlink" title="策略二：调整锚框（Anchor Boxes）与特征层"></a>策略二：调整锚框（Anchor Boxes）与特征层</h4><p>YOLOv8 虽然是 Anchor-Free 架构，但其内部的特征层划分仍至关重要。</p>
+<ul>
+<li><strong>针对小目标</strong>：如上次研讨，我们考虑<strong>引入 P2 或 P3 特征层</strong>。这些精细的特征层具有更高的分辨率，能够更好地捕获小目标（远处的鱼群）的像素信息，直接提升<strong>召回率</strong>。</li>
+<li><strong>优化 NMS (Non-Maximum Suppression)</strong>：调整 NMS 的阈值，适度放宽，以防止在鱼群密集区域将多个鱼群合并为一个。</li>
+</ul>
+<h4 id="策略三：重新设计损失函数权重"><a href="#策略三：重新设计损失函数权重" class="headerlink" title="策略三：重新设计损失函数权重"></a>策略三：重新设计损失函数权重</h4><p>当前的损失函数可能对所有类别的目标一视同仁。</p>
+<ul>
+<li><strong>类别权重分配</strong>：给予<strong>小目标类别</strong>（例如小规模鱼群）更高的损失权重，迫使模型更关注这些难以识别的样本。</li>
+<li><strong>焦点损失 (Focal Loss)</strong>：考虑引入 <strong>Focal Loss</strong> 机制，以减轻大量简单负样本（背景区域）对训练过程的干扰，提高模型对困难样本的专注度。</li>
+</ul>
+<h4 id="策略四：系统性的学习率调度（Learning-Rate-Scheduling）"><a href="#策略四：系统性的学习率调度（Learning-Rate-Scheduling）" class="headerlink" title="策略四：系统性的学习率调度（Learning Rate Scheduling）"></a>策略四：系统性的学习率调度（Learning Rate Scheduling）</h4><p>损失曲线的波动表明当前的学习率调度不够平滑。</p>
+<ul>
+<li>采用 <strong>Warmup</strong> 策略：在训练开始阶段使用较低的学习率，防止权重在初始阶段被破坏。</li>
+<li>采用 <strong>Cosine Annealing</strong>：让学习率按照余弦函数周期性或单调地下降，确保模型在训练后期能够精细地收敛到全局最优解。</li>
+</ul>
+<h4 id="策略五：扩大与平衡数据集"><a href="#策略五：扩大与平衡数据集" class="headerlink" title="策略五：扩大与平衡数据集"></a>策略五：扩大与平衡数据集</h4><p>最终，一切优化都离不开数据。</p>
+<ul>
+<li><strong>收集更多难例</strong>：优先收集模型容易误检或漏检的声呐图像（例如鱼群紧贴水底或背景极其复杂），并将其添加到训练集中。</li>
+<li><strong>负样本采样</strong>：增加<strong>纯水域（无鱼群）</strong> 的图像作为负样本，以训练模型更好地拒绝背景杂波，降低误检率。</li>
+</ul>
+<p><strong>阶段总结：</strong></p>
+<h2 id="在-0-1先生-的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当-YOLO-模型的性能达到我们预定的-mAP-指标（例如-0-8-以上）后，我们才能安全地进入下一个关键环节：DDPG-强化学习智能体的训练。"><a href="#在-0-1先生-的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当-YOLO-模型的性能达到我们预定的-mAP-指标（例如-0-8-以上）后，我们才能安全地进入下一个关键环节：DDPG-强化学习智能体的训练。" class="headerlink" title="在 0-1先生 的指导下，我们已将模型的优化路线从黑箱尝试转变为指标驱动。这五大策略将逐一被验证。当 YOLO 模型的性能达到我们预定的 mAP 指标（例如 0.8 以上）后，我们才能安全地进入下一个关键环节：DDPG 强化学习智能体的训练。"></a>在 <strong>0-1先生</strong> 的指导下，我们已将模型的优化路线从<strong>黑箱尝试</strong>转变为<strong>指标驱动</strong>。这五大策略将逐一被验证。当 YOLO 模型的性能达到我们预定的 mAP 指标（例如 0.8 以上）后，我们才能安全地进入下一个关键环节：<strong>DDPG 强化学习智能体的训练</strong>。</h2><h2 id="系列文章导航"><a href="#系列文章导航" class="headerlink" title="系列文章导航"></a>系列文章导航</h2><h2 id="上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战"><a href="#上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战" class="headerlink" title="上一篇：阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战"></a>上一篇：<a href="/2025/09/25/2025-9-25-yolo-first-experiment-setup/">阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战</a></h2>]]></content>
+      <categories>
+        <category>阶段二实战</category>
+        <category>智能体：模型训练与调优</category>
+      </categories>
+      <tags>
+        <tag>0-1先生</tag>
+        <tag>模型优化</tag>
+        <tag>mAP</tag>
+        <tag>调参</tag>
+        <tag>YOLOv8</tag>
+      </tags>
+  </entry>
+</search>

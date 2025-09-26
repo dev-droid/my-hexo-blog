@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#333333">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="google" content="notranslate">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="keyword" content="AI智能体, 深度学习, DDPG, YOLO, 强化学习, 探鱼设备, 硬件控制, 博客">
+    <meta name="description" content="东大门博客专注于分享AI智能体项目实践、深度学习模型（如DDPG, YOLO）的训练与应用策略，以及硬件控制技术的最新进展。探索用AI技术革新海洋探鱼设备。">
+    <title>阶段二深度研讨：智能体的“大脑”——模型选择与训练策略 | 东大门</title>
+    <link rel="canonical" href="https://qtroni.web.app/2025/09/25/2025-09-25-model-selection-and-training-deepdive/">
+    <link rel="alternate" href="/atom.xml" title="东大门" type="application/atom+xml">
+
+    <base href="/">
+    <link rel="preconnect" href="//cdn.bootcss.com">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.10/styles/atom-one-light.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.10/styles/atom-one-dark.min.css" rel="stylesheet" media="screen and (prefers-color-scheme: dark)">
+    <link href="https://cdn.bootcss.com/uikit/3.2.0/css/uikit.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/uikit/3.2.0/js/uikit.min.js" async></script>
+    <script src="https://cdn.bootcss.com/uikit/3.2.0/js/uikit-icons.min.js" async></script>
+    
+<link rel="stylesheet" href="/styles/cold-stone.css">
+
+    <noscript>
+      <p class="text-center">你的浏览器还没开启 Javascript 功能！</p>
+    </noscript>
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    
+
+    <header class="header" uk-sticky="top: 100; animation: uk-animation-slide-top; bottom: #sticky-on-scroll-up">
+  <nav class="wrapper header-content">
+    <div class="nav-overlay uk-navbar-left">
+      <h1 class="title nav-list-item uk-logo" data-link="/">
+        
+        <a href="/" data-link="/">东大门</a>
+        
+      </h1>
+
+      <ul class="nav-list">
+        
+        <li class="nav-list-item" data-link="/categories/">
+          <a class="nav-list-link" href="/categories">分类</a>
+        </li>
+        
+        
+        <li class="nav-list-item" data-link="/about/">
+          <a class="nav-list-link" href="/about/">关于</a>
+        </li>
+        
+      </ul>
+    </div>
+
+    
+      <div class="uk-navbar-right translate-x">
+        <a class="uk-navbar-toggle" href="#modal-full" uk-search-icon uk-toggle></a>
+      </div>
+    
+  </nav>
+</header>
+
+<div id="modal-full" class="uk-modal-full uk-modal" uk-modal>
+  <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
+    <button class="uk-modal-close-full" type="button" uk-close></button>
+    <form class="uk-search uk-search-large search-form" action="//google.com/search" method="get" accept-charset="UTF-8"
+      target="_blank">
+      <input class="uk-search-input search-form-input" type="search" name="q" placeholder="搜索"
+        autofocus autocomplete="false">
+      <input type="hidden" name="sitesearch" value="https://qtroni.web.app">
+    </form>
+  </div>
+</div>
+
+
+    <main class="main wrapper"><article class="article slide-in-right uk-article">
+  <section class="article-header">
+    <h1 class="article-title uk-article-title">
+      阶段二深度研讨：智能体的“大脑”——模型选择与训练策略
+    </h1>
+    <p class="article-meta uk-article-meta">
+      <span class="meta-info">
+        <span>
+          最后更新&#58;<time class="post-time"
+            datetime="2025-09-25">2025-09-25</time>
+        </span>
+        <span>阅读时间&#58; 3 min</span>
+        <span class="hide" id="busuanzi_container_page_pv">阅读量&#58; <span
+            id="busuanzi_value_page_pv"></span></span>
+      </span>
+    </p>
+  </section>
+  <section class="article-content"><h3 id="研讨主题：从感知到决策——构建智能体的双核大脑"><a href="#研讨主题：从感知到决策——构建智能体的双核大脑" class="headerlink" title="研讨主题：从感知到决策——构建智能体的双核大脑"></a>研讨主题：从感知到决策——构建智能体的双核大脑</h3><p>完成了数据基础的搭建后，我们来到了最核心的阶段：赋予智能体“思考”和“行动”的能力。与 <strong>0-1先生</strong> 的研讨聚焦于智能体的两个关键任务：<strong>感知（Perception）</strong> 和 <strong>行动（Action）</strong>，这需要两种不同类型的AI模型协同工作。</p>
+<hr>
+<h3 id="1-核心任务：构建海洋环境的感知模型"><a href="#1-核心任务：构建海洋环境的感知模型" class="headerlink" title="1. 核心任务：构建海洋环境的感知模型"></a>1. 核心任务：构建海洋环境的感知模型</h3><p><strong>目标：</strong> 实时、准确地从声呐图像中识别鱼群、海底结构和障碍物。</p>
+<h4 id="模型选择：实时目标检测网络"><a href="#模型选择：实时目标检测网络" class="headerlink" title="模型选择：实时目标检测网络"></a><strong>模型选择：实时目标检测网络</strong></h4><p>由于探鱼设备需要快速响应，我们倾向于选择单阶段（One-Stage）目标检测网络，以追求速度和效率。</p>
+<table>
+<thead>
+<tr>
+<th align="left">模型类型</th>
+<th align="left">优势分析</th>
+<th align="left">海洋场景的挑战</th>
+<th align="left">初步选型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>YOLO 系列 (v5&#x2F;v8)</strong></td>
+<td align="left">速度极快，适合边缘设备部署；能够以高帧率处理视频流。</td>
+<td align="left">声呐图像模糊、信噪比低，YOLO的<strong>边界框</strong>在密集鱼群中可能不够精确。</td>
+<td align="left"><strong>首选</strong>。通过修改其骨干网络（Backbone）以更好地处理声呐特征。</td>
+</tr>
+<tr>
+<td align="left"><strong>Faster R-CNN&#x2F;Mask R-CNN</strong></td>
+<td align="left">定位精度高，Mask R-CNN还能实现像素级<strong>实例分割</strong>。</td>
+<td align="left">速度较慢，计算开销大，可能不适合实时控制，但可用作离线数据校验或更精细的分析。</td>
+<td align="left"><strong>备选</strong>。用于验证 YOLO 的检测结果。</td>
+</tr>
+</tbody></table>
+<h4 id="训练策略：迁移学习与声呐定制"><a href="#训练策略：迁移学习与声呐定制" class="headerlink" title="训练策略：迁移学习与声呐定制"></a><strong>训练策略：迁移学习与声呐定制</strong></h4><ol>
+<li><strong>迁移学习（Transfer Learning）</strong>：我们不会从零开始训练。我们将利用在自然图像（如 ImageNet 或 COCO）上预训练的模型权重，将其迁移到我们的声呐数据集上，能大幅缩短训练时间和提升性能。</li>
+<li><strong>损失函数优化</strong>：针对声呐图像的特点，我们可能需要调整损失函数（Loss Function），例如更注重对<strong>小目标</strong>（稀疏鱼群）的检测，并平衡正负样本（鱼群&#x2F;背景）的权重。</li>
+</ol>
+<hr>
+<h3 id="2-核心任务：实现硬件设备的行动模型"><a href="#2-核心任务：实现硬件设备的行动模型" class="headerlink" title="2. 核心任务：实现硬件设备的行动模型"></a>2. 核心任务：实现硬件设备的行动模型</h3><p><strong>目标：</strong> 根据感知模型提供的鱼群位置、环境风险和既定策略，自主调整探头角度、航行速度或释放诱鱼信号等硬件动作。</p>
+<h4 id="模型选择：深度强化学习（DRL）"><a href="#模型选择：深度强化学习（DRL）" class="headerlink" title="模型选择：深度强化学习（DRL）"></a><strong>模型选择：深度强化学习（DRL）</strong></h4><p>这是一个典型的<strong>控制问题</strong>，强化学习（Reinforcement Learning, RL）是最佳解决方案。RL模型通过与环境的不断交互来学习最优动作策略，这完全符合我们的智能体需求。</p>
+<ul>
+<li><strong>状态空间（State）</strong>：感知模型输出的信息（鱼群位置、大小）、设备传感器数据（GPS、水深）。</li>
+<li><strong>动作空间（Action）</strong>：硬件设备可执行的操作集合（如：<code>探头上仰/下俯5°</code>、<code>设备加速/减速1m/s</code>）。</li>
+<li><strong>奖励函数（Reward）</strong>：这是RL成功的关键。例如，靠近目标鱼群获得正奖励，撞到障碍物或偏离航线获得负奖励。</li>
+</ul>
+<p>我们初步选定 <strong>DDPG (Deep Deterministic Policy Gradient)</strong> 或 <strong>PPO (Proximal Policy Optimization)</strong>。</p>
+<blockquote>
+<p><strong>0-1先生的洞察：</strong></p>
+<p><strong>DDPG</strong> 适用于<strong>连续动作空间</strong>（如探头角度调整，可以精确到小数位），非常适合硬件控制。而 <strong>PPO</strong> 具有训练稳定性高、收敛快的优点，可以作为备选。<strong>奖励函数的设计</strong>是成败的关键，它必须精准反映商业捕捞或科研探查的目标。</p>
+</blockquote>
+<hr>
+<h3 id="3-训练环境与资源配置"><a href="#3-训练环境与资源配置" class="headerlink" title="3. 训练环境与资源配置"></a>3. 训练环境与资源配置</h3><p>为了支持这些复杂的模型训练，我们必须准备强大的计算资源和软件环境。</p>
+<ul>
+<li><strong>计算硬件</strong>：至少需要一块高性能 <strong>NVIDIA GPU</strong>（例如 RTX 4090 或 A100&#x2F;H100 云实例），以加速深度学习模型的训练。</li>
+<li><strong>软件框架</strong>：统一使用 <strong>PyTorch</strong> 或 <strong>TensorFlow</strong>，两者都提供了成熟的DL和RL库。</li>
+<li><strong>模拟环境</strong>：在将智能体部署到实际硬件前，必须先搭建一个高保真的 <strong>海洋环境模拟器</strong>。这个模拟器可以接收RL智能体的动作，并返回模拟的声呐图像和环境状态，大幅降低实际测试的成本和风险。</li>
+</ul>
+<p><strong>阶段总结：</strong></p>
+<p>模型选择是技术路线图的核心，它定义了智能体的能力边界。我们不仅要确保模型能够<strong>准确识别</strong>目标，更要保证它能够做出<strong>高效、安全的控制决策</strong>。下一步，我们将根据已有的数据集开始 <strong>YOLO 模型的实验性训练</strong>，并着手设计 <strong>DDPG 的奖励函数</strong>。</p>
+<hr>
+</section>
+</article>
+
+<section class="prev-next card slide-in-right">
+	
+		<a href="/2025/09/25/2025-9-25-yolo-first-experiment-setup/" class="link prev" title="阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战">
+			<span class="hover-underline-animation">&larr; 阶段二实战（一）：YOLO模型的首次训练与声呐数据挑战</span>
+		</a>
+	
+	
+		<a href="/2025/09/25/2025-09-25-ai-fishing-project-start/" class="link next" title="项目启动：用AI革新海洋探鱼设备">
+			<span class="hover-underline-animation">项目启动：用AI革新海洋探鱼设备 &rarr;</span>
+		</a>
+	
+</section>
+
+
+<section class="article-toc">
+  <div class="card uk-margin-remove-bottom">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E8%AE%A8%E4%B8%BB%E9%A2%98%EF%BC%9A%E4%BB%8E%E6%84%9F%E7%9F%A5%E5%88%B0%E5%86%B3%E7%AD%96%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E5%8F%8C%E6%A0%B8%E5%A4%A7%E8%84%91"><span class="toc-text">研讨主题：从感知到决策——构建智能体的双核大脑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E4%BB%BB%E5%8A%A1%EF%BC%9A%E6%9E%84%E5%BB%BA%E6%B5%B7%E6%B4%8B%E7%8E%AF%E5%A2%83%E7%9A%84%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 核心任务：构建海洋环境的感知模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%EF%BC%9A%E5%AE%9E%E6%97%B6%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C"><span class="toc-text">模型选择：实时目标检测网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%AD%96%E7%95%A5%EF%BC%9A%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%A3%B0%E5%91%90%E5%AE%9A%E5%88%B6"><span class="toc-text">训练策略：迁移学习与声呐定制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E4%BB%BB%E5%8A%A1%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%E7%9A%84%E8%A1%8C%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="toc-text">2. 核心任务：实现硬件设备的行动模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88DRL%EF%BC%89"><span class="toc-text">模型选择：深度强化学习（DRL）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E4%B8%8E%E8%B5%84%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="toc-text">3. 训练环境与资源配置</span></a></li></ol>
+  </div>
+</section>
+
+<section class="article slide-in-right">
+  <div class="loader" id="loader">
+    <svg viewBox="0 0 50 50">
+      <circle class="ring" cx="25" cy="25" r="20"></circle>
+      <circle class="ball" cx="25" cy="5" r="3.5"></circle>
+    </svg>
+  </div>
+
+  <div class="comment" id="utteranc"></div>
+  <noscript>Please activate JavaScript for normal use of comments</noscript>
+</section>
+
+<a class="card back-to-top" id="backTop">&UpArrow;</a>
+</main>
+
+    
+
+    <script>
+	window.COLD_STONE = {
+		root: "/",
+		author: "东大门" || '',
+		gaid: "xxxxxxxxxxxxxx" || '',
+		repo: "xrr2016/blog" || '',
+	}
+</script>
+
+
+
+
+	<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad()</script>
+
+
+<script src="/scripts/busuanzi.js" referrerpolicy="origin"></script>
+
+<script src="/scripts/cold-stone.js"></script>
+
+
+
+  <script src="//www.googletagmanager.com/gtag/js?id=xxxxxxxxxxxxxx"></script>
+
+  <script>
+	window.dataLayer = window.dataLayer || []
+	function gtag() {
+		dataLayer.push(arguments)
+	}
+	gtag('js', new Date())
+	gtag('config', window.COLD_STONE.gaid)
+  </script>
+
+
+  </body>
+</html>
