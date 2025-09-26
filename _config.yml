@@ -117,6 +117,9 @@ deploy:
   
   # 部署时的 Git 提交信息 (可选)
   message: "更新时间: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+
+  type: firebase
+>>>>>>> 7b046aa5e39f95226d111b479fff31b4d0b4d880
 # RSS Feed
 feed:
   type: atom
