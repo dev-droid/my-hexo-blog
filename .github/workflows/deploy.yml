@@ -1,0 +1,59 @@
+# 工作流名称
+name: Deploy Hexo Blog
+
+# 何时触发此工作流
+on:
+  push:
+    # 只有当推送到 main 分支时才触发部署
+    branches:
+      - main
+
+# 定义要执行的一系列任务
+jobs:
+  build:
+    # 任务名称
+    name: Build & Deploy
+    
+    # 运行此任务的操作系统环境
+    runs-on: ubuntu-latest
+    
+    # 定义步骤
+    steps:
+      # 1. 检出代码
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          # 检出子模块（如主题），非常重要
+          submodules: true
+          # 获取完整的提交历史
+          fetch-depth: 0
+
+      # 2. 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # 使用您的 Hexo 兼容的 Node 版本，例如 20.x
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. 安装依赖
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. 生成静态文件
+      - name: Generate Static Files
+        run: npx hexo generate
+
+      # 5. 部署到 GitHub Pages
+      # 使用 peaceiris/actions-gh-pages 这个Action来处理部署
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # GitHub 提供的自动认证 Token
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 要推送的内容目录（Hexo 生成的静态文件）
+          publish_dir: ./public
+          # 部署到 gh-pages 分支
+          publish_branch: gh-pages
+          # 提交信息
+          commit_message: "Automated deployment by GitHub Actions"
