@@ -3,12 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
+
 title: 东大门
-subtitle: ''
-description: 'Whatever'
-keywords:
+subtitle: 折腾让世界更美好
+description: 东大门博客专注于分享AI智能体项目实践、深度学习模型（如DDPG, YOLO）的训练与应用策略，以及硬件控制技术的最新进展。探索用AI技术革新海洋探鱼设备。
+keywords: AI智能体, 深度学习, DDPG, YOLO, 强化学习, 探鱼设备, 硬件控制, 博客
 author: 东大门
-language: zh-CN
+language: zh
 timezone: ''
 
 # URL
@@ -28,7 +29,9 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
+# skip_render: # 原本可能是这样
 skip_render:
+  - .well-known/**/* # 添加这一行，跳过渲染 .well-known 目录下的所有文件
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -62,7 +65,8 @@ prismjs:
 index_generator:
   path: ''
   per_page: 10
-  order_by: -date
+  # order_by: -date  # <-- 移除或注释掉按日期倒序
+  order_by: -date  # <-- 新增：先按weight升序，再按日期倒序
 
 # Category & Tag
 default_category: uncategorized
@@ -100,7 +104,19 @@ theme: cold-stone
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  # 您的 Git 仓库地址 (使用 HTTPS 或 SSH 均可)
+  # HTTPS 格式 (推荐，但可能需要输入密码/Token): 
+  # https://github.com/dev-droid/my-hexo-blog.git
+  # SSH 格式 (推荐使用 SSH Key):
+  # git@github.com:dev-droid/my-hexo-blog.git
+  repo: https://github.com/dev-droid/my-hexo-blog.git
+  
+  # 项目页面通常需要推送到 'gh-pages' 分支
+  branch: gh-pages
+  
+  # 部署时的 Git 提交信息 (可选)
+  message: "更新时间: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 # RSS Feed
 feed:
   type: atom

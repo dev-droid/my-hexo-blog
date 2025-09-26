@@ -1,7 +1,6 @@
 ---
-title: categories
-date: 2025-09-20 14:58:59
+title: 博客文章分类
+date: 2025-09-25 10:00:00 # 使用当前日期
+layout: categories # 这一行是关键
 ---
----
-layout: categories
----
+# 您可以在这里添加一些关于分类页的说明，例如“所有文章主题归档如下”。
